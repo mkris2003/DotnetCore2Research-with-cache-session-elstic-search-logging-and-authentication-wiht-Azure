@@ -1,0 +1,183 @@
+﻿1. Azure couchbase 
+https://docs.couchbase.com/server/6.0/cloud/couchbase-azure-marketplace.html
+
+2. Quickstart: Create a single database in Azure SQL Database using the Azure portal
+
+https://docs.microsoft.com/en-us/azure/sql-database/sql-database-single-database-get-started 
+
+
+dotnetcoredbserver
+.database.windows.net
+konanki
+Murali01( mcaps) 
+
+Databasename: DotnetCoreDB
+
+Server=tcp:dotnetcoredbserver.database.windows.net,1433;Initial Catalog=DotnetCoreDB;Persist Security Info=False;User ID=konanki;Password=Murali01;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+
+3.
+ Serilog.AspNetCore
+Serilog.Settings.Configuration
+Serilog.Sinks.MSSqlServer
+
+4. 
+To enable access, use the Windows Azure Management Portal or run sp_set_firewall_rule on the master database to create a firewall rule for this IP address or address range.  It may take up to five minutes for this change to take effect.
+https://blogs.msdn.microsoft.com/azuresqldbsupport/2015/04/29/configuring-the-firewall-for-client-access/
+
+https://manage.windowsazure.com
+
+5.  Create  new firewall search from marketplace 
+then select dataabse , top you can see Set server firewall
+https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure
+
+no need to execute SELECT * FROM sys.firewall_rules ORDER BY name; 
+
+6. 
+Couchbase.Extensions.Session 
+uing Couchbase.Extensions.Caching;
+using Couchbase.Extensions.DependencyInjection;
+Install-Package CouchbaseNetClient
+
+7. Publish application in linux app service using azure 
+https://dotnetcore2researchazure20190508061618.azurewebsites.net/
+8.
+https://dotnetcore2researchazure20190508061618.azurewebsites.net/api/employee/GetCountryDetails
+
+https://dotnetcore2researchazure20190508061618.azurewebsites.net/api/employee/GetCaching
+
+https://dotnetcore2researchazure20190508061618.azurewebsites.net/api/employee/GetSession
+
+9. Except logging every thing working 
+
+10: request and response middleware 
+https://exceptionnotfound.net/using-middleware-to-log-requests-and-responses-in-asp-net-core/
+
+11. Microsoft.Extensions.Logging.AzureAppServices installlower version 2.1.1
+12.   loggerFactory.AddAzureWebAppDiagnostics(
+  new AzureAppServicesDiagnosticsSettings
+  {
+      OutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss zzz} [{Level}] {RequestId}-{SourceContext}: {Message}{NewLine}{Exception}"
+  }
+);
+ to dowload logging 
+ https://docs.microsoft.com/en-us/azure/app-service/deploy-ftp
+ create ftp 
+ get existing credentials or can  change 
+
+ user name :DotnetCore2ResearchAzure20190508061618\$DotnetCore2ResearchAzure20190508061618
+
+ password : pjaQ6fWqhcDShPhWhJ7z0EL0jYoagnZzXGwd0gpG506lFC5mX4aBd56taM55
+
+ ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net/
+
+ once enter username and password you can see log folder
+
+ see logs in xml format 
+ ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net/LogFiles/kudu/trace/
+
+
+ 12. connect azure sql server from your local machine using connection string so you can see SSDT
+
+ 13
+ 
+https://www.elastic.co/guide/en/elastic-stack-deploy/current/azure-marketplace-getting-started.html 
+
+Serilog with elastic search 
+https://www.humankode.com/asp-net-core/logging-with-elasticsearch-kibana-asp-net-core-and-docker 
+Install elastic search guidence 
+https://logz.io/blog/elastic-stack-windows/
+
+https://www.elastic.co/guide/en/kibana/current/windows.html
+
+Install java sdk version greater equal than 8
+https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html  64bit version  muralikrishna.dotnet@gmail.com Murali01 
+
+set environemnt variable :  https://javatutorial.net/set-java-home-windows-10
+when you set path, C:\Program Files\Java\jre1.8.0_211\bin\server\jvm.dll
+
+14.
+https://www.elastic.co/guide/en/elasticsearch/reference/current/windows.html
+https://www.elastic.co/downloads/elasticsearch
+
+
+2
+Run bin/elasticsearch (or bin\elasticsearch.bat on Windows)
+
+3
+Run curl http://localhost:9200/ or Invoke-RestMethod http://localhost:9200 with PowerShell
+
+after installed, check either it is installed or not http://localhost:9200/
+
+goto services: see elasticksearch 
+
+after taht install elasticsearch-service.bat install 
+15. 
+			Open config/kibana.yml in an editor
+			Set elasticsearch.hosts to point at your Elasticsearch instance  ( default local host)
+			3
+			Run bin/kibana (or bin\kibana.bat on Windows)
+
+			4
+			Point your browser at http://localhost:5601
+
+16. this is not working  install filebeat   https://www.elastic.co/downloads/beats/filebeat
+
+running kibana always is :  https://nssm.cc/download
+https://www.youtube.com/watch?v=L-0A2cqTn-w
+
+17. elastic search in serilog 
+Serilog
+Serilog.Sinks.ElasticSearch
+Serilog.Extensions.Logging
+Serilog.Exceptions
+
+18. logs will store at 
+C:\ProgramData\Elastic\Elasticsearch\data
+C:\ProgramData\Elastic\Elasticsearch\data\nodes\0
+
+create index with name of logstash-2019.05.12( current datetime and datetime format) from discover link
+After created go back to discover link, you can see logs 
+Create an Index Pattern in Kibana to Show Data
+ 1. Kibana won't show any logs just yet. You have to specify an index before you can view the logged data. To do this, click the Discover link in the navigation, and then copy and paste the logstash index name which should be listed toward the bottom of the page into the index textbox as shown below, and click the next step button. Alternatively, you can use a wilcard such as logstash-*
+ 2. Then, specify the time filter field name by selecting the @timestamp field and click the Create index pattern button.
+ 3.You can now view the logs by clicking the Discover link in the navigation pane.
+ 4. bottom of discover just click message, youcan search by word 
+ follow below link for creating index and watch logs.
+ https://www.humankode.com/asp-net-core/logging-with-elasticsearch-kibana-asp-net-core-and-docker
+
+ 19.  https://www.elastic.co/blog/deploying-elasticsearch-on-microsoft-azure
+
+ 20. deploying into azure is : while creating loadbalancer should select as external 
+ elastic, kibana, and logstash_system users:
+
+ https://www.elastic.co/guide/en/elastic-stack-deploy/current/azure-marketplace-getting-started.html
+ 1.  while creating loadbalancer should select as external  after deploy goto your elstick resource group: like ElastickResourceGroup
+ 2. es-external-lb-ip tehre you can find public domain address : http://lb-bdmhibv6vvcqm.westus.cloudapp.azure.com just add ip address like
+ http://lb-bdmhibv6vvcqm.westus.cloudapp.azure.com:9200/  user is default  "elastic"  password which you created 
+ 3. click kibana kibana-ip , see external address add port like below kb-bdmhibv6vvcqm.westus.cloudapp.azure.com
+ username  is elastic and password is elastick password:
+ when you are login kibana , use elastick credentials i.e. username and password. 
+ https://stackoverflow.com/questions/51194167/kibana-not-able-to-connect-with-elasticsearch-azure
+
+ 4. passing credentials in elastick  How to Log to Elastic Search by NLog or SeriLog with authentications
+
+ https://stackoverflow.com/questions/49595422/how-to-log-to-elastic-search-by-nlog-or-serilog-with-authentications
+
+ Azure elasticksearch 
+   var elasticUri = Configuration["ElasticConfiguration:Uri"];
+            var userName= Configuration["ElasticConfiguration:UserName"];
+            var password= Configuration["ElasticConfiguration:Password"];
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.Elasticsearch(new  ElasticsearchSinkOptions(new Uri(elasticUri))
+                {
+                    ModifyConnectionSettings = x => x.BasicAuthentication(userName, password),
+                    //AutoRegisterTemplate = true,// this willenable wehn local account
+                })
+            .CreateLogger();
+
+			username for kibana is elastick details only
+
+			22.

@@ -1,0 +1,57 @@
+﻿
+Integration test cases and unit test cases projects both same as Xunit projects 
+1. Install 
+using Microsoft.AspNetCore.TestHost;  -- not required for unit test 
+using Microsoft.AspNetCore.Hosting; -- not required for unit test 
+
+Microsoft.Extensions.Configuration.Json -- not required for unit test 
+
+integration test cases
+
+https://www.codingame.com/playgrounds/35462/creating-web-api-in-asp-net-core-2-0/part-3---integration-tests
+
+
+Microsoft.AspNetCore.Mvc
+Microsoft.AspNetCore.Mvc.Core
+Microsoft.AspNetCore.Diagnostics
+Microsoft.AspNetCore.TestHost
+Microsoft.Extensions.Configuration.Json
+
+Microsoft.AspNetCore.Session
+Microsoft.AspNetCore.HttpsPolicy
+
+Install base project nuget package also 
+
+Httpheaders 
+https://github.com/dotnet/corefx/issues/30349 
+
+2. unit test 
+
+https://www.codingame.com/playgrounds/35462/creating-web-api-in-asp-net-core-2-0/part-2---unit-tests
+
+install all nuget packes like integration test and add webapi reference also 
+
+all type of moq
+
+https://asktej.wordpress.com/2014/03/26/c-using-moq-to-mock-out-parameters-on-a-void-method/ 
+
+http://hamidmosalla.com/2017/08/03/moq-working-with-setupget-verifyget-setupset-verifyset-setupproperty/
+
+Xunit test  (inline, class ,member)
+
+https://andrewlock.net/creating-parameterised-tests-in-xunit-with-inlinedata-classdata-and-memberdata/
+
+HttpPost
+---------------
+https://johnthiriet.com/efficient-post-calls/#
+
+https://www.codingame.com/playgrounds/35462/creating-web-api-in-asp-net-core-2-0/part-3---integration-tests
+
+Tocken base authentication in dotnet core 
+-------------------------------------------
+Microsoft.AspNetCore.Authentication, Version=2.1.1.0
+Microsoft.AspNetCore.Authentication.JwtBearer, Version=2.1.1.0
+Newtonsoft.Json  in your integration test cases 
+https://www.blinkingcaret.com/2018/05/30/refresh-tokens-in-asp-net-core-web-api/
+
+

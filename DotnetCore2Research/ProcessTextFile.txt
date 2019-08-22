@@ -1,0 +1,278 @@
+﻿
+14. Fiddler request : for authentication key
+
+  get: https://localhost:44330/api/Employee/GetCountryDetails
+
+  User-Agent: Fiddler
+Host: localhost:44330
+APIKEY: 65700FE1-66B6-4C3F-8530-3E3720CB8B80
+
+https://www.codingame.com/playgrounds/5099/using-structuremap-with-asp-net-core
+1. Install StructureMap.AspNetCore 
+2.Install StructureMap.Microsoft.DependencyInjection
+3. Scan interfaces and classes 
+http://ciappara.com/blog/2017/09/18/the-correct-way-to-implement-structuremap-in-net-core-webapi-when-having-multiple-projects/
+public IServiceProvider ConfigureIoC(IServiceCollection services)
+{
+    var container = new Container();
+ 
+    container.Configure(config =>
+    {
+        // Register stuff in container, using the StructureMap APIs...
+        config.Scan(_ =>
+        {
+            _.AssemblyContainingType(typeof(Startup));
+            _.Assembly(&quot;Project.Api.Contracts&quot;);//   _.Assembly("DotnetCore2Research"); project solution name 
+            _.Assembly(&quot;Project.Api.Infrastructure&quot;);
+            _.WithDefaultConventions();
+            _.LookForRegistries();
+        });
+ 
+        //Populate the container using the service collection
+        config.Populate(services);
+    });
+ 
+    return container.GetInstance<IServiceProvider>();
+}
+ public class DotnetCoreStructuremapRegistry : Registry
+    {
+        public DotnetCoreStructuremapRegistry()
+        {
+            //For<IEmployee>().LifecycleIs(Lifecycles.Container)
+            //                .Use<Employee>();
+            Scan(scan =>
+            {
+                scan.TheCallingAssembly();
+                scan.WithDefaultConventions();
+
+            });
+        }
+    }
+}
+
+4. Logging , Serilog , SQL server 
+https://www.carlrippon.com/asp-net-core-logging-with-serilog-and-sql-server/
+https://dejanstojanovic.net/aspnet/2018/october/logging-ef-core-actions-to-a-file-using-serilog/
+
+5. Serilog.AspNetCore
+Serilog.Settings.Configuration
+Serilog.Sinks.MSSqlServer
+
+6.
+
+CREATE TABLE [Log] (
+
+   [Id] int IDENTITY(1,1) NOT NULL,
+   [Message] nvarchar(max) NULL,
+   [MessageTemplate] nvarchar(max) NULL,
+   [Level] nvarchar(128) NULL,
+   [TimeStamp] datetimeoffset(7) NOT NULL,  
+   [Exception] nvarchar(max) NULL,
+   [Properties] xml NULL,
+   [LogEvent] nvarchar(max) NULL
+
+   CONSTRAINT [PK_Log] 
+     PRIMARY KEY CLUSTERED ([Id] ASC) 
+
+) 
+
+7.
+public Startup(IHostingEnvironment env)
+{
+  Log.Logger = new LoggerConfiguration()
+                                .ReadFrom.Configuration(Configuration)
+                                .CreateLogger();
+}
+8.  public IServiceProvider ConfigureServices(IServiceCollection services)
+        {  services.AddLogging();}
+9. public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory){
+ loggerFactory.AddSerilog();
+}
+
+10.
+"Serilog": {
+    "MinimumLevel": "Information",
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "Data Source=DESKTOP-FDHO0L4;Initial Catalog=DotnetCoreDB;Integrated Security=True",
+          "tableName": "Log"
+        }
+      }
+    ]
+  }
+
+  11. global  Exception handling 
+  https://code-maze.com/global-error-handling-aspnetcore/
+  12. Middleware pipe line :
+  https://thomaslevesque.com/2018/03/27/understanding-the-asp-net-core-middleware-pipeline/
+  13. API Key management, API Key Authentication
+  
+   https://www.youtube.com/watch?v=n0llyujNGw8 
+  https://stackoverflow.com/questions/38977088/asp-net-core-web-api-authentication
+ 
+
+  14. Fiddler request : for authentication key
+
+  get: https://localhost:44330/api/Employee/GetCountryDetails
+
+  User-Agent: Fiddler
+Host: localhost:44330
+APIKEY: 65700FE1-66B6-4C3F-8530-3E3720CB8B80
+
+15. Couch base:
+
+http://127.0.0.1:8091/ui/index.html#!/overview login: userid: Administrator ,password; Administrator
+OMcluster , administrator and password; Administrator , Administrator
+
+
+Create bucket  (memory bucket for caching)
+then create document 
+
+Bucket: CouchbaseBucket
+document name : Employee 
+{
+    "id": 1,
+    "name": "om",
+    "salary": 1000
+  }
+
+  Index:
+   CREATE INDEX IX_Id ON CouchbaseBucket(id)
+  SELECT g.* 
+FROM CouchbaseBucket g
+  WHERE g.id=1
+
+
+  CREATE INDEX IXname ON CouchbaseBucket(name)
+
+  SELECt g.*
+FROM CouchbaseBucket g
+WHERE g.name='om'
+
+16.  Caching 
+
+
+uing Couchbase.Extensions.Caching;
+using Couchbase.Extensions.DependencyInjection;
+Install-Package CouchbaseNetClient
+
+
+Service collection extesion
+ private const string SolutionName = "DotnetCore2Research", CouchBaseClientKeyName = "couchbase";
+
+             public static void AddCaching(this IServiceCollection services, IConfigurationRoot Configuration)
+        {
+            var definition = GetCouchbaseClientDefinition(Configuration);
+            services.AddCouchbase(opt =>
+            {
+                opt.Username = definition.Username;
+                opt.Password = definition.Password;
+                opt.Servers = definition.Servers;
+            });
+            services.AddDistributedCouchbaseCache(definition?.Buckets[0]?.Name, string.Empty, opt => { });
+        }
+
+      
+
+        public static CouchbaseClientDefinition GetCouchbaseClientDefinition(IConfigurationRoot Configuration)
+        {
+            var couchbaseClientDefinition = new CouchbaseClientDefinition();
+            Configuration.GetSection(CouchBaseClientKeyName).Bind(couchbaseClientDefinition);
+            return couchbaseClientDefinition;
+
+        }
+
+ public EmployeeController( IDistributedCache distributedCachecache)
+        {
+		}
+
+
+ "couchbase": {
+
+    "username": "Administrator",
+    "password": "Administrator",
+    "enableConfigHeartbeat": false,
+    "useSsl": "false",
+
+    "operationLifespan": "15",
+
+    "servers": [
+      "http://Localhost:8091"
+    ],
+
+    "buckets": [
+
+      {
+
+        "name": "CouchbaseBucket",
+
+        "useSsl": "false",
+
+        "password": "",
+
+        "connectionPool": {
+
+          "name": "custom",
+
+          "maxSize": "10",
+
+          "minSize": "5"
+
+        }
+
+      }
+
+    ]
+
+  }
+
+
+17. Session :
+
+Couchbase.Extensions.Session 
+
+
+18. Json web tockens
+goto:
+https://jwt.io/
+enter details from : PAYLOAD:DATA 
+{
+  "sub": "08251981",
+  "name": "muralikrishna konanki",
+  "iat": 2057674
+}
+
+it will generate automatic key:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwODI1MTk4MSIsIm5hbWUiOiJtdXJhbGlrcmlzaG5hIGtvbmFua2kiLCJpYXQiOjIwNTc2NzR9.-vvXLdGTwRRTWINqIiEWkbdCEzD4Za0XQGQk5G7A0II
+
+then follow below link:
+https://www.blinkingcaret.com/2018/05/30/refresh-tokens-in-asp-net-core-web-api/
+
+https://fullstackmark.com/post/19/jwt-authentication-flow-with-refresh-tokens-in-aspnet-core-web-api
+
+https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
+
+
+19. azure
+
+https://github.com/chriswill/serilog-sinks-azureblobstorage
+https://stackoverflow.com/questions/51959089/logging-asp-net-core-on-azure-via-serilog
+https://github.com/serilog/serilog-sinks-azuretablestorage  table base azure
+https://github.com/cnelsonakgov/serilog-sinks-azureapp  azure app
+https://stackoverflow.com/questions/51959089/logging-asp-net-core-on-azure-via-serilog
+https://github.com/serilog/serilog/wiki/Provided-Sinks */ azure all type of sinks for azure, aws, cloud.
+
+https://andrewlock.net/writing-logs-to-elasticsearch-with-fluentd-using-serilog-in-asp-net-core/  Writing logs to Elasticsearch with Fluentd using Serilog in ASP.NET Core
+https://www.humankode.com/asp-net-core/logging-with-elasticsearch-kibana-asp-net-core-and-docker  Logging with ElasticSearch, Kibana, ASP.NET Core and Docker 
+
+What is ElasticSearch?
+In simple terms, ElasticSearch is an open source database that is well suited to indexing logs and analytical data.
+
+What is Kibana?
+Kibana is an open source data visualization user interface for ElasticSearch. Think of ElasticSearch as the database and Kibana as the web user interface which you can use to build graphs and query data in ElasticSearch.
+
+https://ml-software.ch/posts/writing-to-azure-diagnostics-log-stream-using-serilog  */ Writing to Azure Diagnostics Log Stream using Serilog */
+
+https://docs.couchbase.com/server/6.0/cloud/couchbase-azure-marketplace.html */ Azure couchbase */

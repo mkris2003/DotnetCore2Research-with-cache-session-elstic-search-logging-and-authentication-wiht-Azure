@@ -1,0 +1,71 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "EmployeeConnection": "Server=tcp:dotnetcoredbserver.database.windows.net,1433;Initial Catalog=DotnetCoreDB;Persist Security Info=False;User ID=konanki;Password=Murali01;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  },
+
+
+  "Serilog": {
+    "MinimumLevel": "Information",
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "Server=tcp:dotnetcoredbserver.database.windows.net,1433;Initial Catalog=DotnetCoreDB;Persist Security Info=False;User ID=konanki;Password=Murali01;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+          "tableName": "Log"
+        }
+      }
+    ]
+  },
+  "couchbase": {
+
+    "username": "konanki",
+    "password": "Kandukure@234",
+    "enableConfigHeartbeat": false,
+    "useSsl": "false",
+
+    "operationLifespan": "15",
+
+    "servers": [
+      "http://vm0.server-vxilrecsxpr4u.westus.cloudapp.azure.com:8091",
+      "http://vm1.server-vxilrecsxpr4u.westus.cloudapp.azure.com:8091",
+      "http://vm2.server-vxilrecsxpr4u.westus.cloudapp.azure.com:8091",
+      "http://vm3.server-vxilrecsxpr4u.westus.cloudapp.azure.com:8091",
+      "http://vm4.server-vxilrecsxpr4u.westus.cloudapp.azure.com:8091"
+    ],
+
+    "buckets": [
+
+      {
+
+        "name": "CoubaseBucket",
+
+        "useSsl": "false",
+
+        "password": "",
+
+        "connectionPool": {
+
+          "name": "custom",
+
+          "maxSize": "10",
+
+          "minSize": "5"
+
+        }
+
+      }
+
+    ]
+
+  },
+  "ElasticConfiguration": {
+    "Uri": "http://localhost:9200/"
+  }
+
+}

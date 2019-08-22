@@ -1,0 +1,19 @@
+﻿ Create and deploy a web app to Azure Service Fabric Mesh 
+ 1. https://docs.microsoft.com/en-us/azure/service-fabric-mesh/service-fabric-mesh-quickstart-dotnet-core
+ 2. Stateless service 
+ https://github.com/sanathkumarshetty/CloudyFridaySample
+ https://www.youtube.com/watch?v=dnkfnYn9yf8
+
+ https://www.youtube.com/watch?v=U0W8Z0bp6aw
+
+ 3. when  you install servicefabric node from local mansger which is on task bar 
+ once it started use below link.
+ http://localhost:19080/Explorer/index.html#/
+
+
+ https://www.youtube.com/watch?v=Eh7FZg87dcY */ Introduction on Microsoft Azure Service Fabric */
+ https://www.youtube.com/watch?v=vgtJ7DDNBEk
+
+ https://www.youtube.com/watch?v=VRWJ5251l9c */Service Fabric Setup in Azure  
+ https://www.youtube.com/watch?v=c_-BX0Odibo *. part 2 
+ https://www.youtube.com/watch?v=dnkfnYn9yf8 */ Creating stateles service */
